@@ -1,8 +1,9 @@
 # ableton-osc-twitch
-Twitch IRC bot to control Ableton Live via AbletonOSC
+Twitch IRC bot to control Ableton Live via AbletonOSC.  Random result of stream chaos over at <https://www.twitch.tv/plus6production>
 
-# WARNING:
-Currently Mac-only (PC version in the works)
+# WARNINGS:
+1. Currently Mac-only (PC version in the works).
+2. SOME FEATURES REQUIRE LETTING CHAT SEND KEYSTROKES TO YOUR SYSTEM.  BE CAREFUL!
 
 # Setup
 1. Install [AbletonOSC](https://github.com/ideoforms/AbletonOSC) 
