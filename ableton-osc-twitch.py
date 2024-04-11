@@ -49,6 +49,10 @@ def note_to_number(note: str) -> int:
 
     return note_num
 
+# CAN THROW
+def human_readable_index_to_internal(i):
+    return int(i) - 1
+
 class TwitchAbletonOsc:
 
     def __init__(self, ip, port):
@@ -65,18 +69,18 @@ class TwitchAbletonOsc:
             # need track and scene index
             if len(args) >= 3 and args[1].isdigit() and args[2].isdigit():
                 print(f'select clip on track {args[1]} scene {args[2]}')
-                self.current_track = int(args[1])
-                self.current_clip = int(args[2])
+                self.current_track = human_readable_index_to_internal(args[1])
+                self.current_clip = human_readable_index_to_internal(args[2])
                 self.client.send_message('/live/view/set/selected_clip', [self.current_track, self.current_clip])
         elif args[0] == 'track':
             # need track index
             if len(args) >= 2 and args[1].isdigit():
-                self.current_track = int(args[1])
+                self.current_track = human_readable_index_to_internal(args[1])
                 self.client.send_message('/live/view/set/selected_track', self.current_track)
         elif args[0] == 'scene':
             # need scene index
             if len(args) >= 2 and args[1].isdigit():
-                self.current_scene = int(args[1])
+                self.current_scene = human_readable_index_to_internal(args[1])
                 self.client.send_message('/live/view/set/selected_scene', self.current_scene)
 
     def parse_delete_subcommand(self, args):
@@ -131,8 +135,8 @@ class TwitchAbletonOsc:
             # Needs track, clip, and length
             if len(args) >= 4 and args[1].isdigit() and args[2].isdigit() and args[3].isdigit():
                 print(f'create clip of length {args[3]} on track {args[1]} slot {args[2]}')
-                self.current_track = int(args[1])
-                self.current_clip = int(args[2])
+                self.current_track = human_readable_index_to_internal(args[1])
+                self.current_clip = human_readable_index_to_internal(args[2])
                 self.client.send_message('/live/clip_slot/create_clip', [self.current_track, self.current_clip, int(args[3])])
         elif args[0] == 'track':
             if len(args) >= 2:
@@ -198,7 +202,7 @@ class TwitchAbletonOsc:
             if len(args) > 1 and args[1] == 'clip':
                 # Fire clip
                 if len(args) > 3 and args[2].isdigit() and args[3].isdigit():
-                    self.client.send_message('/live/clip/fire', [int(args[2]), int(args[3])])
+                    self.client.send_message('/live/clip/fire', [human_readable_index_to_internal(args[2]), human_readable_index_to_internal(args[3])])
                 else:
                     self.client.send_message('/live/clip/fire', [self.current_track, self.current_clip])
             elif len(args) == 1:
@@ -208,7 +212,7 @@ class TwitchAbletonOsc:
             if len(args) > 1 and args[1] == 'clip':
                 # Stop clip
                 if len(args) > 3 and args[2].isdigit() and args[3].isdigit():
-                    self.client.send_message('/live/clip/stop', [int(args[2]), int(args[3])])
+                    self.client.send_message('/live/clip/stop', [human_readable_index_to_internal(args[2]), human_readable_index_to_internal(args[3])])
                 else:
                     self.client.send_message('/live/clip/stop', [self.current_track, self.current_clip])
             elif len(args) == 1:
