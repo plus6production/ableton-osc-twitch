@@ -240,7 +240,7 @@ def handle_chat_message(message):
         #print(message_split[0])
         command = message_split[0][1:]
         params = message_split[1:]
-        if command == 'ableton':
+        if command == 'ableton' and len(params) > 0:
             print("We got here", params)
             ableton_osc.parse_ableton_command(params)
         elif command == 'ott':
